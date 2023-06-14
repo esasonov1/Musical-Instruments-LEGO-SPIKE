@@ -5,7 +5,7 @@ import device
 import force_sensor
 
 #Plug in Force Sensor to ANY port
-#push force button to play a single notes
+#push force button to play single notes
 #right button on hub disconnects
 
 deviceTypeLookup = {48: 'm', 49: 'M', 61: 'Color S', 62: 'Distance S', 63: 'Force S', 255: 'N'}
