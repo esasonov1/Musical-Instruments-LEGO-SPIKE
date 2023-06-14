@@ -4,6 +4,11 @@ from hub import *
 import distance_sensor as ds
 
 
+#Plug in Distance Sensor to port F
+#use distance sensor to play a range of notes
+#right button on hub disconnects
+
+
 midi = MIDI_Player('emma')
 midi.wait_for_connection()
 Piano = MIDI_Instrument(midi, instruments['Acoustic Grand Piano'], channel=0)
