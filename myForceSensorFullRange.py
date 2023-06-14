@@ -3,7 +3,9 @@ from ble_MIDI import *
 from hub import *
 import force_sensor
 
-
+#Plug in Force Sensor to port C
+#push force button to play a range of notes
+#right button on hub disconnects
       
 
 def done(): 
@@ -43,4 +45,4 @@ Piano = MIDI_Instrument(midi, instruments['Acoustic Grand Piano'], channel=0)
 start()
 
 
-            
+         
