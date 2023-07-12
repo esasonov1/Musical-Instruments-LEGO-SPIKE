@@ -17,22 +17,23 @@ import version
 deviceTypeLookup = {48: 'm', 49: 'M', 61: 'Color S', 62: 'Distance S', 63: 'Force S', 255: 'N'}
 hubPorts = {'A': 'N', 'B': 'N', 'C': 'N', 'D': 'N', 'E': 'N', 'F': 'N'}
 
-drumNotes ={'Closed Hi-Hat': 31, 'Rim Shot': 32, 'Pedal Hi-Hat': 33,'Snare Drum': 34,
-    'Side Stick': 37,'Hand Clap': 39,'Low Tom': 41,'Closed Hi-Hat': 42,'Low Tom': 43,
-    'Pedal Hi-Hat': 44,'Mid Tom': 45,'Open Hi-Hat': 46,'Mid Tom': 47,'High Tom': 48,
-    'Crash Cymbal': 49,'High Tom': 50,'Ride Cymbal': 51,'Ride Cymbal': 52,'Ride Bell': 53,
-    'Shaker': 54,'Crash Cymbal': 57,'Ride Cymbal': 59,'Snare Drum': 86,'Closed Hi-Hat': 90,
-    'Low Tom': 91,'Closed Hi-Hat': 92,'Pedal Hi-Hat': 94,'Mid Tom': 95,'High Tom': 96,
-    'Ride Cymbal': 99}
+drumNotes = {31: 'Closed Hi-Hat', 32: 'Rim Shot', 33: 'Pedal Hi-Hat', 34: 'Snare Drum',
+    37: 'Side Stick', 39: 'Hand Clap', 41: 'Low Tom', 42: 'Closed Hi-Hat', 43: 'Low Tom',
+    44: 'Pedal Hi-Hat', 45: 'Mid Tom', 46: 'Open Hi-Hat', 47: 'Mid Tom', 48: 'High Tom',
+    49: 'Crash Cymbal', 50: 'High Tom', 51: 'Ride Cymbal', 52: 'Ride Cymbal', 53: 'Ride Bell',
+    54: 'Shaker', 57: 'Crash Cymbal', 59: 'Ride Cymbal', 86: 'Snare Drum', 90: 'Closed Hi-Hat',
+    91: 'Low Tom', 92: 'Closed Hi-Hat', 94: 'Pedal Hi-Hat', 95: 'Mid Tom',96: 'High Tom',
+    99: 'Ride Cymbal'}
 
 
 #initialize
-
-#firmware_check()
 midi = MIDI_Player('emma')
 midi.wait_for_connection()
 Piano = MIDI_Instrument(midi, instruments['Acoustic Grand Piano'], channel=0)
 
+
+
+#firmware_check()
 
 def done():
     return button.pressed(button.RIGHT)
@@ -42,11 +43,21 @@ def test():
     print("hi Emma!")
 
 
-def play_note(sensor, note, duration, dynamics = 'ff'):
+def play_note(sensor, note, duration, dynamics = 'fff'):
     
     #print("in play_note")
+
+    if type(note) == str:  
+        for key, value in drumNotes.items():
+            if value == note:
+                note = key  
+                #print("Found note:", note)
+  
+            
+    if (sensor == "N"):  
+        play_the_note(note, duration, dynamics)    
         
-    if (sensor == "Force S"):
+    elif (sensor == "Force S"):
         if Force_Sensor_Activated():
             play_the_note(note, duration, dynamics)
         else:
@@ -87,8 +98,8 @@ def play_note(sensor, note, duration, dynamics = 'ff'):
         play_the_note(note_value, .1, dynamics)
         
     else: 
-        print("ELSE!!")
-        time.sleep(2)       
+        print("ELSE!!Invalid sensor type")
+        time.sleep(.5)       
 
 
 def play_chord(a, b=0, c=0, d=0, e=0, f=0, g=0, h=0):
@@ -100,7 +111,7 @@ def play_chord(a, b=0, c=0, d=0, e=0, f=0, g=0, h=0):
 def play_the_note(note, duration, dynamics):
     Piano.on(note, velocity[dynamics])
     time.sleep(duration)
-    Piano.off(note)
+    Piano.off(note, velocity[dynamics])
 
 
 def Force_Sensor_Activated():
@@ -271,3 +282,4 @@ def string2port(portS):
     if portS == "port.D": return port.D
     if portS == "port.E": return port.E
     if portS == "port.F": return port.F
+

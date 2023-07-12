@@ -183,64 +183,34 @@ def ReadPorts():
             
     return None
 
-
 def is_connected(sensor):
-    ReadPorts()
-    
-    there_is_sensor = False
-    
-    i = 0
-    for port in sorted(hubPorts):
-        
-        if hubPorts[port] == sensor:
-            print(f"{sensor} is connected to port.{port}")
-            there_is_sensor = True
-    
-        if i == 5 and not there_is_sensor:
-            print(f"{sensor} is NOT connected")
-            print("--------------")
-            raise ValueError(f"{sensor} is not connected to any port")
-            return False
-            
-        if i == 5 and there_is_sensor:
-            return True
-            
-        i+=1
+    ports = check_port_connection(sensor)
+
+    if ports:
+        print(f"{sensor} is connected to the following ports:")
+        for port in ports:
+            print(port)
+        print("--------------")
+        return True
 
     return False
 
 
 def check_port_connection(sensor):
     ReadPorts()
-    #print("heyyy")
-    i = 0
+
+    ports = []
     for port in sorted(hubPorts):
-        print("loop?")
-        
-        if hubPorts[port][0] == sensor:
-            print("connected")
-            if hubPorts[port][1] == False:
-                print(f"Nice! Its in port.{port}")
-                hubPorts[port][1] = True  
-                hubPorts[port]
-                return string2port(f"port.{port}")
-                #return(f"port.{port}")   
-            else:
-                print("somethings already here, try again")
-                continue
+        if hubPorts[port] == sensor:
+            ports.append(f"port.{port}")
 
-    
-        if i == 5:
-            print(f"{sensor} is NOT connected")
-            print("--------------")
-            #raise Exception(f"{sensor} is NOT connected")
-            return None
-        i+=1
-        
-    #print("returnnnn")
-    return None
+    if not ports:
+        print(f"{sensor} is NOT connected")
+        print("--------------")
+        return None
 
-        
+    return ports
+  
     
 def string2port(portS):
     if portS == "port.A": return port.A

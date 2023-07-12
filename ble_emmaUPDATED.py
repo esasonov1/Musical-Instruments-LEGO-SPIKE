@@ -37,16 +37,13 @@ def test():
 
 
 def play_note(sensor = "N", note = 60, duration = 1, dynamics = 'fff', port = None):
-    
-    #print("in play_note")
 
     if type(note) == str:  
         for key, value in drumNotes.items():
             if value == note:
                 note = key  
                 #print("Found note:", note)
-
-            
+        
     if (sensor == "N"):  
         play_the_note(note, duration, dynamics)    
         
@@ -66,12 +63,12 @@ def play_note(sensor = "N", note = 60, duration = 1, dynamics = 'fff', port = No
             
     elif (sensor == "Distance S"):
         if Distance_Sensor_Activated(port):
-            the_ports = check_port_connection("Distance S")
-            for port in the_ports:
-                if distance_sensor.distance(port) > 0:
-                    dist = distance_sensor.distance(port)
-                    dist_note = get_note_from_distance(dist)
-                    play_the_note(dist_note, duration, dynamics)
+            #the_ports = check_port_connection("Distance S")
+            #for port in the_ports:
+            if distance_sensor.distance(port) > 0:
+                dist = distance_sensor.distance(port)
+                dist_note = get_note_from_distance(dist)
+                play_the_note(dist_note, duration, dynamics)
             #play_the_note(note, duration)
         else:
             print("waiting for DS activation")
@@ -79,18 +76,10 @@ def play_note(sensor = "N", note = 60, duration = 1, dynamics = 'fff', port = No
             
     elif ((sensor == "m") or (sensor == "M")):
         #Need and if activated statment bc it could be not conencted
-        the_port = check_port_connection(sensor)
-        mpos = motor.absolute_position(the_port)
-    
-        if mpos < 0:
-            mpos = mpos + 360  
-        
-        print(mpos)
-        
-        note_range = 108 - 21  #Total number of notes in the range
-        note_value = int((mpos / 360) * note_range) + 21  #Maps the notes and value
-
-        play_the_note(note_value, .1, dynamics)
+        #the_ports = check_port_connection("m")
+        #for port in the_ports:
+        note_value = motor_pos(port)
+        play_the_note(note_value, duration, dynamics)
         
     else: 
         print("ELSE!!Invalid sensor type")
@@ -98,18 +87,18 @@ def play_note(sensor = "N", note = 60, duration = 1, dynamics = 'fff', port = No
 
 
 def play_chord(a, b=0, c=0, d=0, e=0, f=0, g=0, h=0):
-    Piano.on([a,b,c,d,e,f,g,h],velocity['ff'])
-    time.sleep(.5)
-    Piano.off([a,b,c,d,e,f,g,h])
-        
-        
+Piano.on([a,b,c,d,e,f,g,h],velocity['ff'])
+time.sleep(.5)
+Piano.off([a,b,c,d,e,f,g,h])
+    
+    
 def play_the_note(note, duration, dynamics):
     Piano.on(note, velocity[dynamics])
     time.sleep(duration)
     Piano.off(note, velocity[dynamics])
 
 
-def Force_Sensor_Activated(port):
+def Force_Sensor_Activated():
     try:
         if port is None:
             the_ports = check_port_connection("Force S")
@@ -124,15 +113,20 @@ def Force_Sensor_Activated(port):
             
             return False
         else:
-            #print("Port was typed") 
-            if force_sensor.force(port) > 0:
-                print("Force Sensor is ACTIVATED")
-                return True
-            else:
-                #print("FS FALSE")
-                #time.sleep(.25)
+            try:
+                if force_sensor.force(port) > 0:
+                    print("Force Sensor is ACTIVATED")
+                    return True
+                else:
+                    #print("FS FALSE")
+                    #time.sleep(.25)
+                    return False
+            except:
+                print("Error: Force Sensor is NOT connected in the right port")
+                time.sleep(2)
                 return False
-                            
+                
+                        
     except Exception as e:
         print(f"Error: {e}")
         time.sleep(2)
@@ -140,7 +134,7 @@ def Force_Sensor_Activated(port):
 
 
     
-def Color_Sensor_Activated(port):
+def Color_Sensor_Activated():
     try:
         if port is None:
             the_ports = check_port_connection("Color S")
@@ -155,12 +149,18 @@ def Color_Sensor_Activated(port):
             
             return False
         else:
-            if color_sensor.reflection(port) > 50:
-                print("Color Sensor is ACTIVATED")
-                return True
-            else:
+            try:
+                if color_sensor.reflection(port) > 50:
+                    print("Color Sensor is ACTIVATED")
+                    return True
+                else:
+                    return False
+                    
+            except:
+                print("Error: Color Sensor is NOT connected in the right port")
+                time.sleep(2)
                 return False
-                
+                    
     except Exception as e:
         print(f"Error: {e}")
         time.sleep(2)
@@ -182,6 +182,38 @@ def Distance_Sensor_Activated(port):
 
             return False
         else:
+            try:
+                if distance_sensor.distance(port) > 0:
+                    print("Distance Sensor is ACTIVATED")
+                    return True
+                else:
+                    return False
+                    
+            except: 
+                print("Error: Distance Sensor is NOT connected in the right port")
+                time.sleep(2)
+                return False
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        time.sleep(2)
+        return False    
+
+
+'''
+def Motor_Activated(port):
+    try:
+        if port is None:
+            the_ports = check_port_connection("m")
+            if the_ports is None:
+                raise Exception("small motor is NOT connected")
+            
+            for port in the_ports:
+                motor_pos(port)
+                print("small motor is ACTIVATED")
+                return True
+
+        else:
             if distance_sensor.distance(port) > 0:
                 print("Distance Sensor is ACTIVATED")
                 return True
@@ -192,11 +224,28 @@ def Distance_Sensor_Activated(port):
         print(f"Error: {e}")
         time.sleep(2)
         return False    
+'''
+
+def motor_pos(port):  
+    try:
+        mpos = motor.absolute_position(port)
+                
+        if mpos < 0:
+            mpos = mpos + 360  
+                    
+        print(mpos)
+        note_range = 108 - 21  #Total number of notes in the range
+        note_value = int((mpos / 360) * note_range) + 21  #Maps the notes and value
+        
+        return note_value
+        
+    except:
+        print("Error: Motor is NOT connected in the right port")
+        time.sleep(2)
+        return False
 
 
-#def Motor_Activated():
     
-
 def disconnect():
     print('disconnect')
     midi.disconnect()
@@ -223,7 +272,7 @@ def NoteToNumber(note, octave = 0):
         
     
 '''-----Helper functions section (NOT intended for the user to use!)-----'''
-
+'''
 def firmware_check():
     try:
         version.atlantis
@@ -231,7 +280,7 @@ def firmware_check():
         print("Firmware is up to date! Good Job!")
     except:
         print("Old Firmware: Please update your LEGO SPIKE hub to the latest firmware!")
-
+'''
 
 def get_note_from_distance(dist):
     if dist == -1 or dist > 500:
@@ -242,15 +291,13 @@ def get_note_from_distance(dist):
 
 
 
-def ReadPorts():   
-    i = 0
-    for key in sorted(hubPorts): 
-        hubPorts[key] = deviceTypeLookup.get(device.device_id(i))
-        i+=1
+def ReadPorts(self):
+    for i in range(6):
+        if device.ready(i):
+            self.deviceType[i] = deviceTypeLookup[device.id(i)]
+        #else:
+            #self.deviceType[i] = None
             
-    return None
-
-
 def is_connected(sensor):
     ReadPorts()
     

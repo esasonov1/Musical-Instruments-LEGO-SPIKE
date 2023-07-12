@@ -7,14 +7,14 @@ import force_sensor
 #push force button to play a single note BUT the harder you push, the louder the sound
 #right button on hub disconnects
 
-midi = MIDI_Player('emma')
+midi = MIDI_Player('emma')
 midi.wait_for_connection()
 Piano = MIDI_Instrument(midi, instruments['Acoustic Grand Piano'], channel=0)
     
 
 def done(): 
     return button.pressed(button.RIGHT)
-       
+        
 
 def velocity():
     velocity_range = 127
@@ -45,15 +45,12 @@ def start():
                 play_note(48)
             else:
                 time.sleep(.1)
-                          
+                        
     except:
         pass                             
-           
+            
     print('disconnect')
     midi.disconnect()
-      
+        
         
 start()
-
-
-            

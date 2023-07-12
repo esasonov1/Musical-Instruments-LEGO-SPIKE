@@ -39,7 +39,6 @@ while not done():
 
 while not done():
     if Color_Sensor_Activated():
-        play_note("Color S", 75, 1, 'ppp')
         play_note("Color S", 75, 1, 'ffff')
 
     
