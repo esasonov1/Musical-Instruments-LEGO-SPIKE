@@ -1,5 +1,5 @@
 # MUSICAL INSTRUMNETS LEGO SPIKE
-*** Emma Sasonov, 8/1/2023 ***
+Emma Sasonov, 8/1/2023
 
 
 Purpose: A library to be used on the LEGO SPIKE Prime that allows kids to build instruments
@@ -8,7 +8,7 @@ Purpose: A library to be used on the LEGO SPIKE Prime that allows kids to build 
          and cool instruments!
 
 
-Note: There are several variations of ble_emma... this is because some include automatic port detection
+*Note: There are several variations of ble_emma... this is because some include automatic port detection
       while others only work for previous SPIKE firmwares. Some of the latest updates dont work
       on a few of the librarys.
 
@@ -18,7 +18,7 @@ Instructions
 2. Either use example code to create a music or use functions from my library by importing ble_emma
 3. Run code (When you run your code, it should say “Waiting.....") 
 4. Open up Garage Band
-    -Select an Instrument (any instrument!)
+    - Select an Instrument (any instrument!)
     6. Press the settings button on the top right of your screen (⚙)
     7. Click Advanced 
     8. Click Bluetooth MIDI Devices
