@@ -1,6 +1,6 @@
 # MUSICAL INSTRUMNETS LEGO SPIKE
 
-Emma Sasonov, 8/1/2023
+##Emma Sasonov, 8/1/2023
 
 Purpose: A library to be used on the LEGO SPIKE Prime that allows kids to build instruments
          with LEGO SPIKE sensors that can play notes through MIDI on GarageBand using an iPad/iPhone.
