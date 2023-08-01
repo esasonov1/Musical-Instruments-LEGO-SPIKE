@@ -10,8 +10,8 @@ import time
 import motor
 
 
-
 while not done():
+
 
     print(force_sensor.force(port.A))
 
@@ -29,4 +29,3 @@ while not done():
         light_matrix.clear()
         motor.stop(port.F)
         time.sleep(0.1)
-        

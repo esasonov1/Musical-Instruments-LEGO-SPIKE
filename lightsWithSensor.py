@@ -1,7 +1,7 @@
 from hub import light_matrix
 from hub import port
 from hub import *
-from ble_emmaPORTS import *
+from ble_emmaREDOPORTS import *
 
 import color
 import runloop
@@ -11,7 +11,8 @@ import motor
 
 
 
-while True:
+while not done():
+
 
     print(force_sensor.force(port.A))
 
@@ -29,4 +30,3 @@ while True:
         light_matrix.clear()
         motor.stop(port.F)
         time.sleep(0.1)
-        

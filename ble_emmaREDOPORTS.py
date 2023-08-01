@@ -101,12 +101,11 @@ def play_the_note(note, duration, dynamics):
     Piano.off(note, velocity[dynamics])
 
 
-def Force_Sensor_Activated(port):
+def Force_Sensor_Activated(port = None):
     try:
         if port is None:
             the_ports = check_port_connection("Force S")
             if the_ports is None:
-                #print("Please connect the Force Sensor!")
                 raise Exception("Force Sensor is NOT connected")
             
             for port in the_ports:
@@ -137,7 +136,7 @@ def Force_Sensor_Activated(port):
 
 
     
-def Color_Sensor_Activated(port):
+def Color_Sensor_Activated(port = None):
     try:
         if port is None:
             the_ports = check_port_connection("Color S")
@@ -170,7 +169,7 @@ def Color_Sensor_Activated(port):
         return False
 
         
-def Distance_Sensor_Activated(port):
+def Distance_Sensor_Activated(port = None):
     try:
         if port is None:
             the_ports = check_port_connection("Distance S")
@@ -229,7 +228,7 @@ def Motor_Activated(port):
         return False    
 '''
 
-def motor_pos(port):  
+def motor_pos(port = None):  
     try:
         mpos = motor.absolute_position(port)
                 
@@ -300,6 +299,7 @@ def ReadPorts(self):
             self.deviceType[i] = deviceTypeLookup[device.id(i)]
         else:
             self.deviceType[i] = None
+            
             
 def is_connected(sensor):
     ReadPorts()

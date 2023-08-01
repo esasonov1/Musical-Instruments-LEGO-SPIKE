@@ -89,12 +89,12 @@ def play_note(sensor = "N", note = 60, duration = 1, dynamics = 'fff', port = No
         time.sleep(.5)       
 
 
-def play_chord(a, b=0, c=0, d=0, e=0, f=0, g=0, h=0):
-    Piano.on([a,b,c,d,e,f,g,h],velocity['ff'])
+def play_chord(a, b=1000, c=1000, d=1000, e=1000, f=1000, g=1000, h=1000):
+    Piano.on([a,b,c,d,e,f,g,h],velocity['ffff'])
     time.sleep(.5)
     Piano.off([a,b,c,d,e,f,g,h])
-        
-        
+
+     
 def play_the_note(note, duration, dynamics):
     Piano.on(note, velocity[dynamics])
     time.sleep(duration)
@@ -256,7 +256,7 @@ def disconnect():
 
 
 
-def NoteToNumber(note, octave = 0):
+def NoteToNumber(note, octave = 3):
     notes = {"C": 24,"Db": 25,"D": 26,"Eb": 27,"E": 28,"F": 29,"Gb": 30,"G": 31,"Ab": 32, "A": 33,"Bb": 34,"B": 35}
     
     try:  

@@ -1,12 +1,12 @@
 from ble_emmaREDO import *
 from ble_MIDI import *
+#test()
 
 
-while not done():
-    if Force_Sensor_Activated(port.F):
-        play_note("m", 1, .1, "ffff", port.E)
-    else:
-        time.sleep(.5)
+while True:
+    #play_note("Color S", 62, 1, 'fff', port.E)
+    play_note("Color S", 66, 1, 'fff', port.C)
+    play_note("Color S", 69, 1, 'fff', port.A)
 
-    
+
 disconnect()
