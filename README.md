@@ -13,7 +13,7 @@ Purpose: A library to be used on the LEGO SPIKE Prime that allows kids to build 
       on a few of the librarys.
 
               
-Instructions
+Instructions:
 1. Load ble_advertising.py, ble_CBR.py, and ble_emma to your SPIKE Prime
 2. Either use example code to create a music or use functions from my library by importing ble_emma
 3. Run code (When you run your code, it should say “Waiting.....") 
