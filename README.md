@@ -23,7 +23,7 @@ Instructions
 7. Click Advanced 
 8. Click Bluetooth MIDI Devices
 9. Select the name that appears (should first say Not Connected and then change to Connected)
-       - Feel free to change the name of the connection in your code!(8 char max)            
+      - Feel free to change the name of the connection in your code!(8 char max)            
 10. Plays some cool music! 🎶 (make sure to use some LEGO SPIKE sensors in your build!)
 
 Once up and running, try recording your music in GarageBand!
